@@ -11,8 +11,11 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "init-page": "npm install",
     "start": "react-scripts start",
-    "start-api": "cd flask_api && flask run --no-debugger",
+    "start-page": "yarn init-page && yarn start",
+    "start-api-debug": "cd flask_api && pip install -U Flask && pip install python-dotenv && pip install PyMySQL && flask run",
+    "start-api-no-debug" : "yarn start-api-debug --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -31,5 +34,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },"proxy":"http://localhost:5000/"
+  },
+  "proxy": "http://localhost:5000/"
 }
