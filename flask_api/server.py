@@ -1,5 +1,5 @@
 import pymysql
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 import time
 import os #allows import of the .env enviornment files
@@ -35,10 +35,12 @@ def RequestInfoGivenRegion(query,Region):
         newQuery= query.format(region =Region,col=colList[i],table=tableList[i])
         cursor.execute(newQuery) 
         resultRows = dictfetchall(cursor)
-        resultObj[colList[i]]={
-            "Min":resultRows[0]["Min"],
-            "Max":resultRows[0]["Max"]
-        }
+        if len(resultRows)!=0:
+            resultObj[colList[i]]={
+                "Min":resultRows[0]["Min"],
+                "Max":resultRows[0]["Max"]
+            }
+        
     return json.dumps(resultObj)
 
 # *****NOTICE******
@@ -58,8 +60,7 @@ cursor = db.cursor()                                #new cursor command so we do
 colList = ["confirmed","deaths","positive", "suspected","icu_positive", "icu_suspected"]
 tableList =["total_count_confirmed","total_count_deaths","covid19_positive_patients","suspected_covid19_positive_patients","icu_covid19_positive_patients","icu_covid19_suspected_patients"]
 query_object = {
-    "get_regions":"SELECT id, name FROM region_name;",
-    # "get_categories":"SELECT name, MAX(confirmed), MAX(deaths), MAX(positive), MAX(suspected), MAX(icu_positive), MAX(icu_suspected) FROM region_name INNER JOIN total_count_confirmed ON region_name.id = total_count_confirmed.region_name_id INNER JOIN total_count_deaths ON region_name.id = total_count_deaths.region_name_id INNER JOIN covid19_positive_patients ON region_name.id = covid19_positive_patients.region_name_id INNER JOIN suspected_covid19_positive_patients ON region_name.id = suspected_covid19_positive_patients.region_name_id INNER JOIN icu_covid19_positive_patients ON region_name.id = icu_covid19_positive_patients.region_name_id INNER JOIN icu_covid19_suspected_patients ON region_name.id = icu_covid19_suspected_patients.region_name_id WHERE name = '{}' GROUP BY name;",
+    "get_regions":"SELECT name FROM region_name;",
     "get_category":"SELECT MAX({col}) as 'Max', MIN({col}) as 'Min' FROM region_name INNER JOIN {table} ON region_name.id = {table}.region_name_id  WHERE name = '{region}' GROUP BY name;"
 }
 
@@ -84,7 +85,11 @@ def regions():
 def get_Region(Region):
     data=RequestInfoGivenRegion(query_object["get_category"], Region)
     return (data)         
-
+@app.route('/regionData', methods=['POST'])
+def get_RegionData():
+    print(request.data)
+    #data=RequestInfoGivenRegion(query_object["get_category"], Region)
+    return  json.dumps({"foo":"Bar"})
 @app.route('/about') # about page
 def about():
     return 'The About Page'
