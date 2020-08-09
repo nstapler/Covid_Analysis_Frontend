@@ -6,13 +6,22 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.5.0",
+    "nouislider-react": "^3.3.8",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "init-page": "npm install",
     "start": "react-scripts start",
-    "start-api": "cd flask_api && flask run --no-debugger",
+    "start-page": "yarn init-page && yarn start",
+    "start-page+": "yarn start",
+    "start-api-debug": "cd flask_api && pip install -U Flask && pip install python-dotenv && pip install PyMySQL && flask run",
+    "start-api-debug+": "cd flask_api && flask run",
+    "start-api-no-debug": "yarn start-api-debug --no-debugger",
+    "start-api-no-debug+": "yarn start-api-debug+ --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -31,5 +40,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },"proxy":"http://localhost:5000/"
+  },
+  "proxy": "http://localhost:5000/"
 }

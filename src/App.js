@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, {Component } from 'react';
 import './App.css';
 import logo from './logo.svg';
+import FilterBar from './components/FilterBar';
 
-function App() {
-  const [currentTime, setCurrentTime] = useState(0);
+export class app extends Component {
 
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterSelection: {},
+      regionData: {},
+      regions: []
+    };
+  }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>Api Response:</ div>
-        <p>
-          The current time is {currentTime}.
-        </p>
-      </header>
-    </div>
-  );
+
+  componentDidMount() {
+  }
+  componentWillUnmount() {
+  }
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+        <FilterBar regions={this.getRegions}></FilterBar>
+      </div>
+    );
+  }
+
 }
 
-export default App;
+export default app;

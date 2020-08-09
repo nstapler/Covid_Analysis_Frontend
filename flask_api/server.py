@@ -1,5 +1,5 @@
 import pymysql
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 import time
 import os #allows import of the .env enviornment files
@@ -16,27 +16,57 @@ def dictfetchall(cursor):
             
 def RequestInfo(query):
 # this takes in a querry form ListOfQuereys and then returns the results in a json format.
+    resultObj = {}
     cursor.execute(query) 
-    results = json.dumps(dictfetchall(cursor))
-    return results
+    rowList =dictfetchall(cursor)
+    for rowObj in rowList:
+        for col in rowObj:
+            if col in resultObj:
+                resultObj[col].append(rowObj[col])
+            else:
+                resultObj[col]=[]
+    return json.dumps(resultObj)
    
 def RequestInfoGivenRegion(query,Region):
 # this takes in a querry form ListOfQuereys and then returns the results in a json format.
-    cursor.execute(query.format('Alameda')) 
-    results = json.dumps(dictfetchall(cursor))
-    return results
+    resultsList = []
+    resultObj = {}
+    for i in range(len(colList)):
+        newQuery= query.format(region =Region,col=colList[i],table=tableList[i])
+        cursor.execute(newQuery) 
+        resultRows = dictfetchall(cursor)
+        if len(resultRows)!=0:
+            resultObj[colList[i]]={
+                "Min":resultRows[0]["Min"],
+                "Max":resultRows[0]["Max"]
+            }
+        
+    return json.dumps(resultObj)
 
-
+# *****NOTICE******
+# Within the Administration tab on the left column of the mysql workbench
+# go to users and priveleges and add an account called public
+# use standard for the authentification type 
+# localhost for the limit to host matching
+# Covid_Analysis for the password
+# then go to the administrative roles for the public user
+# and click DBA for the role
+# then apply
 db = pymysql.connect(host = "localhost",
-                     user = "root",
+                     user = "public",
                      password = "Covid_Analysis",
                      db = "covid" )                 #gives access to script as root can change later
 cursor = db.cursor()                                #new cursor command so we dont have to write db.cursor() all the time
+colList = ["confirmed","deaths","positive", "suspected","icu_positive", "icu_suspected"]
+tableList =["total_count_confirmed","total_count_deaths","covid19_positive_patients","suspected_covid19_positive_patients","icu_covid19_positive_patients","icu_covid19_suspected_patients"]
+query_object = {
+    "get_regions":"SELECT name FROM region_name;",
+    "get_category":"SELECT MAX({col}) as 'Max', MIN({col}) as 'Min' FROM region_name INNER JOIN {table} ON region_name.id = {table}.region_name_id  WHERE name = '{region}' GROUP BY name;"
+}
 
-ListOfQuereys=[
-"SELECT id, name FROM region_name",
-"SELECT name, MAX(confirmed), MAX(deaths), MAX(positive), MAX(suspected), MAX(icu_positive), MAX(icu_suspected) FROM region_name INNER JOIN total_count_confirmed ON region_name.id = total_count_confirmed.region_name_id INNER JOIN total_count_deaths ON region_name.id = total_count_deaths.region_name_id INNER JOIN covid19_positive_patients ON region_name.id = covid19_positive_patients.region_name_id INNER JOIN suspected_covid19_positive_patients ON region_name.id = suspected_covid19_positive_patients.region_name_id INNER JOIN icu_covid19_positive_patients ON region_name.id = icu_covid19_positive_patients.region_name_id INNER JOIN icu_covid19_suspected_patients ON region_name.id = icu_covid19_suspected_patients.region_name_id WHERE name = '{}' GROUP BY name;"
-]
+# #uncomment below to test
+# JsonResults=RequestInfo(query_object["get_regions"])
+# print(JsonResults)
 #query = "SELECT id, name FROM region_name"          #specific query
 #cursor.execute(query)                               # do the query
 #Region = cursor.fetchall()                          # get all the results and place it into the tulep Region
@@ -48,13 +78,18 @@ def home():
 
 @app.route('/regions',methods=['GET'])
 def regions():
-    JsonResults=RequestInfo(ListOfQuereys[0])
+    JsonResults=RequestInfo(query_object["get_regions"])
     return(JsonResults)
 
-@app.route('/<string:Region>', methods=['GET'])
+@app.route('/regions:<string:Region>', methods=['GET'])
 def get_Region(Region):
-    data=RequestInfoGivenRegion(ListOfQuereys[1], Region)
+    data=RequestInfoGivenRegion(query_object["get_category"], Region)
     return (data)         
+@app.route('/regionData', methods=['POST'])
+def get_RegionData():
+    print(request.data)
+    #data=RequestInfoGivenRegion(query_object["get_category"], Region)
+    return  json.dumps({"foo":"Bar"})
 
 @app.route('/about') # about page
 def about():
