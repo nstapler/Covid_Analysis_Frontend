@@ -90,6 +90,7 @@ def get_RegionData():
     print(request.data)
     #data=RequestInfoGivenRegion(query_object["get_category"], Region)
     return  json.dumps({"foo":"Bar"})
+
 @app.route('/about') # about page
 def about():
     return 'The About Page'
