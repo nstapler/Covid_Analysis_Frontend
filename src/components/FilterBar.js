@@ -40,9 +40,12 @@ export class FilterBar extends Component {
     //if only
     await fetch(`/regionData`, {
       method: "POST",
-      body: JSON.stringify(this.state.filterSelections)
+      body: JSON.stringify(this.state.filterSelections),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }).then(res => res.json()).then(data => {
-      console.log('check this filter data out', data);
+      console.log('check this filtered data', data);
     });
   }
   componentDidMount() {
