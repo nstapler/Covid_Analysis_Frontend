@@ -40,23 +40,24 @@ export class SubFilter extends Component {
         return (
             <div className="SubFilter">
                 <input type="checkbox" checked={this.state.visible} onChange={this.onclick.bind(this)} />
-                <label>
+                <label class="filterName">
                     {this.props.name + ": "}
-                    {this.state.visible &&
-                        <Nouislider
-                            start={[this.state.leftValue, this.state.rightValue]}
-                            step={1}
-                            connect={true}
-                            tooltips={[true, true]}
-                            key={this.props.name}
-                            range={{
-                                min: this.props.min,
-                                max: this.props.max
-                            }}
-                            onSlide={this.onChangeSlide.bind(this)}
-                        />
-                    }
                 </label>
+                {this.state.visible &&
+                    <Nouislider
+                        start={[this.state.leftValue, this.state.rightValue]}
+                        step={1}
+                        connect={true}
+                        tooltips={[true, true]}
+                        key={this.props.name}
+                        range={{
+                            min: this.props.min,
+                            max: this.props.max
+                        }}
+                        onSlide={this.onChangeSlide.bind(this)}
+                    />
+                }
+
             </div>
         )
     }
