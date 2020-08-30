@@ -1,4 +1,4 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import logo from './logo.svg';
 import FilterBar from './components/FilterBar';
@@ -25,7 +25,13 @@ export class app extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <FilterBar regions={this.getRegions}></FilterBar>
+        <div id="bodyArea">
+
+        </div>
+        <div id="filterArea">
+          <FilterBar regions={this.getRegions}></FilterBar>
+        </div>
+
       </div>
     );
   }
