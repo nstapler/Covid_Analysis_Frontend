@@ -35,7 +35,7 @@ export class FilterBar extends Component {
   }
 
   async handleSubmit(event) {
-    alert('check this filter data out');
+    //alert('check this filter data out');
     event.preventDefault();
     //if only
     await fetch(`/regionData`, {
@@ -46,6 +46,7 @@ export class FilterBar extends Component {
       }
     }).then(res => res.json()).then(data => {
       console.log('check this filtered data', data);
+      this.props.setFilteredData(data);
     });
   }
   componentDidMount() {

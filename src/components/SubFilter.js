@@ -40,7 +40,7 @@ export class SubFilter extends Component {
         return (
             <div className="SubFilter">
                 <input type="checkbox" checked={this.state.visible} onChange={this.onclick.bind(this)} />
-                <label class="filterName">
+                <label className="filterName">
                     {this.props.name + ": "}
                 </label>
                 {this.state.visible &&

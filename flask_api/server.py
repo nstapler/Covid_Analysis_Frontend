@@ -76,10 +76,11 @@ def RequestDataGivenFilters(Filters):
         #print("Resultrows: "+str(resultRows))
         print("Resulting "+colList[i]+" len: "+ str(len(resultRows)))
         if len(resultRows)!=0:
-            resultObj[colList[i]]={
-                "rows":resultRows
-            }
+            if "filteredData" not in resultObj:
+                resultObj["filteredData"]={}
+            resultObj["filteredData"][colList[i]]=resultRows
 
+    resultObj["filters"]=Filters
     return json.dumps(resultObj,default=json_serial)
 # *****NOTICE******
 # Within the Administration tab on the left column of the mysql workbench

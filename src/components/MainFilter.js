@@ -26,7 +26,7 @@ export class MainFilter extends Component {
 
         return (
             <label className="MainFilter">
-                <span class="filterName">Choose The Region:</span>
+                <span className="filterName">Choose The Region:</span>
                 <span>
                     <select name="name" value={this.state.value} onChange={this.handleChange.bind(this)}>
                         <option value=""></option>
