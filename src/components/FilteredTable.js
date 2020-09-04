@@ -114,4 +114,5 @@ function FilteredTable({ name, rows }) {
   )
 }
 
-export default FilteredTable
+
+export{FilteredTable,Styles}
