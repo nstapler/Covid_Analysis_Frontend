@@ -47,7 +47,6 @@ function Table({ columns, data }) {
   const firstPageRows = rows.slice(0, 20);
 
   return (
-    <>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -87,9 +86,6 @@ function Table({ columns, data }) {
           )}
         </tbody>
       </table>
-      <br />
-      <div>Showing the first 20 results of {rows.length} rows</div>
-    </>
   )
 }
 
@@ -98,9 +94,8 @@ function FilteredTable({ name, rows }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: name.toUpperCase(),
-        accessor: name,
-        id: name,
+        Header: name.toUpperCase()+" TABLE",
+        id: name+"_TABLE",
         columns: Object.keys(rows[0]).sort().map((column, i) => {
           return {
             Header: column.toUpperCase(),

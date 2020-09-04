@@ -29,6 +29,7 @@ export class app extends Component {
 
         </FilteredTable>);
       });
+
     }
 
     return (

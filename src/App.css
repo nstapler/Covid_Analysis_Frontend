@@ -43,6 +43,8 @@
   margin: 0 20px 0 20px;
   padding: 10px 50px 20px 50px;
   overflow:auto;
+  flex-wrap: nowrap;
+  display: flex;
 }
 #filterArea{
   background-color: burlywood;
