@@ -26,8 +26,7 @@
     "start-api-debug": "cd flask_api && pip install -U Flask && pip install python-dotenv && pip install PyMySQL && flask run",
     "start-api-debug+": "cd flask_api && flask run",
     "start-api-no-debug": "yarn start-api-debug --no-debugger",
-    "start-api-no-debug+": "yarn start-api-debug+ --no-debugger",
-    
+    "start-api-no-debug+": "yarn start-api-debug+ --no-debugger"
   },
   "eslintConfig": {
     "extends": "react-app"
