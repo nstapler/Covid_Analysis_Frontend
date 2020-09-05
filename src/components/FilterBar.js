@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainFilter from './MainFilter';
 import SubFilter from './SubFilter';
+var apiUrl = "https://covid-project-api-2020.herokuapp.com/";
 export class FilterBar extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ export class FilterBar extends Component {
     });
   }
   async getRegions(dataObj) {
-    await fetch('/regions',
+    await fetch(apiUrl+'/regions',
     {
       method: "GET",
       headers: {
@@ -32,7 +33,7 @@ export class FilterBar extends Component {
     });
   }
   async getRegionData(selected) {
-    await fetch(`/regions:${selected}`,
+    await fetch(apiUrl+`/regions:${selected}`,
     {
       method: "GET",
       headers: {
@@ -51,7 +52,7 @@ export class FilterBar extends Component {
     //alert('check this filter data out');
     event.preventDefault();
     //if only
-    await fetch(`/regionData`, {
+    await fetch(apiUrl+`/regionData`, {
       method: "POST",
       body: JSON.stringify(this.state.filterSelections),
       headers: {
