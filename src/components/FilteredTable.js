@@ -146,12 +146,13 @@ function Table({ columns, data }) {
 
 
 function FilteredTable({ name, rows }) {
+  let tableName = name.toUpperCase()+" TABLE"
   const columns = React.useMemo(
     () => [
       {
-        Header: name.toUpperCase()+" TABLE",
+        Header: tableName,
         id: name+"_table",
-        accessor: '',
+        accessor: tableName,
         columns: Object.keys(rows[0]).sort().map((column, i) => {
           return {
             Header: column.toUpperCase(),

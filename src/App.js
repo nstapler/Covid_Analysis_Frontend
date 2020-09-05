@@ -31,9 +31,11 @@ export class app extends Component {
       });
       filteredTablesHeader = (<Styles>
         <table>
+          <thead>
           <th>
             Region: {this.state.returnedData.filters.name}
           </th>
+          </thead>
         </table>
       </Styles>)
     }
