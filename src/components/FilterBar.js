@@ -19,14 +19,27 @@ export class FilterBar extends Component {
     });
   }
   async getRegions(dataObj) {
-    await fetch('/regions').then(res => res.json()).then(data => {
+    await fetch('/regions',
+    {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(res => res.json()).then(data => {
       console.log("regions:", data);
       //   dataObj.regions = data.name;
       this.setState({ regions: data.name });
     });
   }
   async getRegionData(selected) {
-    await fetch(`/regions:${selected}`).then(res => res.json()).then(data => {
+    await fetch(`/regions:${selected}`,
+    {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+    ).then(res => res.json()).then(data => {
       console.log(data);
       this.setState({
         regionData: data
@@ -42,7 +55,8 @@ export class FilterBar extends Component {
       method: "POST",
       body: JSON.stringify(this.state.filterSelections),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     }).then(res => res.json()).then(data => {
       console.log('check this filtered data', data);
