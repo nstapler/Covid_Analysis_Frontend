@@ -150,7 +150,8 @@ function FilteredTable({ name, rows }) {
     () => [
       {
         Header: name.toUpperCase()+" TABLE",
-        id: name+"_TABLE",
+        id: name+"_table",
+        accessor: '',
         columns: Object.keys(rows[0]).sort().map((column, i) => {
           return {
             Header: column.toUpperCase(),
