@@ -73,7 +73,6 @@ export class FilterBar extends Component {
       submit = <input type="submit" value="Submit" />;
     }
     return (
-      //this.props
       <form className="FilterBar" onSubmit={this.handleSubmit.bind(this)}>
         <MainFilter setSelection={this.setFilterSelection.bind(this)} changeFunc={this.getRegionData.bind(this)} regions={this.state.regions}></MainFilter>
         {regionFilters}
