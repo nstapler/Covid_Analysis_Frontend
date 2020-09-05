@@ -16,17 +16,18 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "init-page": "npm install",
     "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "init-page": "npm install",
     "start-page": "yarn init-page && yarn start",
     "start-page+": "yarn start",
     "start-api-debug": "cd flask_api && pip install -U Flask && pip install python-dotenv && pip install PyMySQL && flask run",
     "start-api-debug+": "cd flask_api && flask run",
     "start-api-no-debug": "yarn start-api-debug --no-debugger",
     "start-api-no-debug+": "yarn start-api-debug+ --no-debugger",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    
   },
   "eslintConfig": {
     "extends": "react-app"
