@@ -35,14 +35,18 @@ export class FilterBar extends Component {
   }
 
   async handleSubmit(event) {
-    alert('check this filter data out');
+    //alert('check this filter data out');
     event.preventDefault();
     //if only
     await fetch(`/regionData`, {
       method: "POST",
-      body: JSON.stringify(this.state.filterSelections)
+      body: JSON.stringify(this.state.filterSelections),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }).then(res => res.json()).then(data => {
-      console.log('check this filter data out', data);
+      console.log('check this filtered data', data);
+      this.props.setFilteredData(data);
     });
   }
   componentDidMount() {
