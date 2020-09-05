@@ -91,10 +91,13 @@ def RequestDataGivenFilters(Filters):
 # then go to the administrative roles for the public user
 # and click DBA for the role
 # then apply
-db = pymysql.connect(host = "localhost",
+db = pymysql.connect(host = "covid-project.cni5jxwbesmd.us-west-1.rds.amazonaws.com",
+                    port=3308,
                      user = "public",
-                     password = "Covid_Analysis",
-                     db = "covid" )                 #gives access to script as root can change later
+                     password = "passypass",
+                     db = "covid",
+                     connect_timeout = 60
+                      )                 #gives access to script as root can change later
 cursor = db.cursor()                                #new cursor command so we dont have to write db.cursor() all the time
 regionTable="region_name"
 colList = ["confirmed","deaths","positive", "suspected","icu_positive", "icu_suspected"]
