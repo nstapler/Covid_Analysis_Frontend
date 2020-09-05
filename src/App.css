@@ -51,7 +51,7 @@
   position: relative;
 }
 #displayHeader{
-  height : 5vh;
+  height : fit-content;
   display: flex;
   justify-content: center;
 }

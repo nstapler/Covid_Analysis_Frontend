@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MainFilter from './MainFilter';
 import SubFilter from './SubFilter';
-var apiUrl = "https://covid-project-api-2020.herokuapp.com/";
+var apiUrl = "https://covid-project-api-2020.herokuapp.com";
 export class FilterBar extends Component {
   constructor(props) {
     super(props);
